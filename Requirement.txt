@@ -1,0 +1,38 @@
+1. Hall room e block thake
+meyeder hostel thake A,B,C diye 
+cheleder north/south block 
+
+2. Cheleder jnno north/south block
+
+3. Hall change korar option
+
+4. student ke ak room theke arek room change korar option 
+
+5. Student registration e state indian baad e bangladesh er jela gula
+
+6. in admin dashboard -> 
+Hall names = different type halls
+blocks - 
+total rooms 
+total seats 
+students hobe Allocated seats, total room ... unalocated seats, 
+remove courses
+- show how many leave students are there
+
+7. Add leave feature
+
+
+8. Book hostel -> register -> if room is full ... block register & pop up error message
+
+9. ADMIN Add room -> hall and block form
+10. ADMIN student Registration -> hall and block on form -> popup if not avialable room 
+		duration max. 6 months sore 6 years porjnto thakbe
+11. ADMIN manage students -> can be changeable room
+
+
+
+Student panel
+- Can able to add picture
+- My profile to get whole data 
+Book hostel er moddhe hall ar block thakbe & duration 6 years porjnto
+- my room -> Available room in dashboard 
