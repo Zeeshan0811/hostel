@@ -64,7 +64,7 @@ function valid()
 {
 if(document.registration.password.value!= document.registration.cpassword.value)
 {
-alert("Password and Re-Type Password Field do not match  !! Please try again later");
+alert("Password and Re-Type Password Field do not match  !! This is required !!");
 document.registration.cpassword.focus();
 return false;
 }
