@@ -3,17 +3,16 @@ session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
-//code for add courses
-if ($_POST['submit']) {
-	$coursecode = $_POST['cc'];
-	$coursesn = $_POST['cns'];
-	$coursefn = $_POST['cnf'];
+// Code for add block
+if (isset($_POST['submit_block'])) {
+	$block_type = $_POST['block_type'];
+	$block_name = $_POST['block_name'];
 
-	$query = "insert into  courses (course_code,course_sn,course_fn) values(?,?,?)";
+	$query = "INSERT INTO blocks (block_type, block_name) VALUES (?, ?)";
 	$stmt = $mysqli->prepare($query);
-	$rc = $stmt->bind_param('sss', $coursecode, $coursesn, $coursefn);
+	$stmt->bind_param('ss', $block_type, $block_name);
 	$stmt->execute();
-	echo "<script>alert('Course has been added successfully');</script>";
+	echo "<script>alert('Block has been added successfully');</script>";
 }
 
 ?>
@@ -27,10 +26,10 @@ if ($_POST['submit']) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Add Courses</title>
+	<title>Add Courses and Blocks</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-social.css">
 	<link rel="stylesheet" href="css/bootstrap-select.css">
 	<link rel="stylesheet" href="css/fileinput.min.css">
@@ -46,70 +45,45 @@ if ($_POST['submit']) {
 		<?php include('includes/sidebar.php'); ?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
-
 				<div class="row">
 					<div class="col-md-12">
-
-						<h2 class="page-title">Add Courses </h2>
-
+						<h2 class="page-title">Add Courses and Blocks</h2>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
-									<div class="panel-heading">Add courses</div>
+									<div class="panel-heading">Add Block</div>
 									<div class="panel-body">
 										<form method="post" class="form-horizontal">
-
-											<div class="hr-dashed"></div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Code </label>
+												<label class="col-sm-2 control-label">Block Type</label>
 												<div class="col-sm-8">
-													<input type="text" value="" name="cc" class="form-control">
+													<select class="form-control" name="block_type" required>
+														<option value="male">Male Block</option>
+														<option value="female">Female Block</option>
+													</select>
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Name (Short)</label>
+												<label class="col-sm-2 control-label">Block Name</label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control" name="cns" id="cns" value=""
-														required="required">
-
+													<input type="text" class="form-control" name="block_name" required>
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Course Name(Full)</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control" name="cnf" value="">
+												<div class="col-sm-8 col-sm-offset-2">
+													<input class="btn btn-primary" type="submit" name="submit_block"
+														value="Add Block">
 												</div>
 											</div>
-
-
-
-											<div class="col-sm-8 col-sm-offset-2">
-
-												<input class="btn btn-primary" type="submit" name="submit"
-													value="Add course">
-											</div>
+										</form>
 									</div>
-
-									</form>
-
 								</div>
 							</div>
-
-
 						</div>
-
-
-
-
 					</div>
 				</div>
-
 			</div>
 		</div>
-
-
-	</div>
-	</div>
 	</div>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap-select.min.js"></script>
@@ -120,8 +94,6 @@ if ($_POST['submit']) {
 	<script src="js/fileinput.js"></script>
 	<script src="js/chartData.js"></script>
 	<script src="js/main.js"></script>
-
-	</script>
 </body>
 
 </html>

@@ -60,7 +60,73 @@ check_login();
 													?>
 
 													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
-													<div class="stat-panel-title text-uppercase"> Students</div>
+													<div class="stat-panel-title text-uppercase"> Blocks </div>
+												</div>
+											</div>
+											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
+												<i class="fa fa-arrow-right"></i></a>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="panel panel-default">
+											<div class="panel-body bk-primary text-light">
+												<div class="stat-panel text-center">
+
+													<?php
+													$result = "SELECT count(*) FROM registration ";
+													$stmt = $mysqli->prepare($result);
+													$stmt->execute();
+													$stmt->bind_result($count);
+													$stmt->fetch();
+													$stmt->close();
+													?>
+
+													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
+													<div class="stat-panel-title text-uppercase"> Total Rooms </div>
+												</div>
+											</div>
+											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
+												<i class="fa fa-arrow-right"></i></a>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="panel panel-default">
+											<div class="panel-body bk-primary text-light">
+												<div class="stat-panel text-center">
+
+													<?php
+													$result = "SELECT count(*) FROM registration ";
+													$stmt = $mysqli->prepare($result);
+													$stmt->execute();
+													$stmt->bind_result($count);
+													$stmt->fetch();
+													$stmt->close();
+													?>
+
+													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
+													<div class="stat-panel-title text-uppercase"> Total Seats </div>
+												</div>
+											</div>
+											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
+												<i class="fa fa-arrow-right"></i></a>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="panel panel-default">
+											<div class="panel-body bk-primary text-light">
+												<div class="stat-panel text-center">
+
+													<?php
+													$result = "SELECT count(*) FROM registration ";
+													$stmt = $mysqli->prepare($result);
+													$stmt->execute();
+													$stmt->bind_result($count);
+													$stmt->fetch();
+													$stmt->close();
+													?>
+
+													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
+													<div class="stat-panel-title text-uppercase"> Allocated Seats</div>
 												</div>
 											</div>
 											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
@@ -80,7 +146,7 @@ check_login();
 													$stmt1->close();
 													?>
 													<div class="stat-panel-number h1 "><?php echo $count1; ?></div>
-													<div class="stat-panel-title text-uppercase">Total Rooms </div>
+													<div class="stat-panel-title text-uppercase">Un Allocated Seats </div>
 												</div>
 											</div>
 											<a href="manage-rooms.php" class="block-anchor panel-footer text-center">See
