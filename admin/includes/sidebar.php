@@ -19,7 +19,7 @@
 					<li><a href="#"><i class="fa fa-desktop"></i> Halls</a>
 					<ul>
 						<li><a href="add-hall.php">Add a Hall</a></li>
-						<li><a href="manage-rooms.php">Manage Hall</a></li>
+						<li><a href="manage-halls.php">Manage Hall</a></li>
 					</ul>
 				</li>
 				</li>
