@@ -9,6 +9,20 @@
 						<li><a href="manage-courses.php">Manage Courses</a></li>
 					</ul>
 				</li>
+					<li><a href="#"><i class="fa fa-desktop"></i> Blocks</a>
+					<ul>
+						<li><a href="add-block.php">Add a Block</a></li>
+						<li><a href="manage-blocks.php">Manage Blocks</a></li>
+					</ul>
+				</li>
+				</li>
+					<li><a href="#"><i class="fa fa-desktop"></i> Halls</a>
+					<ul>
+						<li><a href="add-hall.php">Add a Hall</a></li>
+						<li><a href="manage-rooms.php">Manage Hall</a></li>
+					</ul>
+				</li>
+				</li>
 					<li><a href="#"><i class="fa fa-desktop"></i> Rooms</a>
 					<ul>
 						<li><a href="create-room.php">Add a Room</a></li>
