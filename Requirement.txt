@@ -35,4 +35,8 @@ Student panel
 - Can able to add picture
 - My profile to get whole data 
 Book hostel er moddhe hall ar block thakbe & duration 6 years porjnto
+
+
+Division List: https://github.com/nuhil/bangladesh-geocode/blob/master/divisions/divisions.sql
+District List: https://github.com/nuhil/bangladesh-geocode/blob/master/districts/districts.sql
 - my room -> Available room in dashboard 
