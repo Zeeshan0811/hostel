@@ -83,7 +83,7 @@ if (isset($_GET['del'])) {
                                                 <td><?php echo $cnt; ?></td>
                                                 <td><?php echo ucfirst($row->block_type); ?></td>
                                                 <td><?php echo $row->block_name; ?></td>
-                                                <td><?php echo $row->posting_date; ?></td>
+                                                <td><?php echo $row->created_at; ?></td>
                                                 <td>
                                                     <a href="edit-block.php?id=<?php echo $row->id; ?>"><i
                                                             class="fa fa-edit"></i></a>&nbsp;&nbsp;

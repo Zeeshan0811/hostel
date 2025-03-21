@@ -26,7 +26,7 @@ if (isset($_POST['submit_block'])) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Add Courses and Blocks</title>
+	<title>Add Blocks</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
@@ -47,7 +47,7 @@ if (isset($_POST['submit_block'])) {
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="page-title">Add Courses and Blocks</h2>
+						<h2 class="page-title">Add Blocks</h2>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
@@ -58,8 +58,8 @@ if (isset($_POST['submit_block'])) {
 												<label class="col-sm-2 control-label">Block Type</label>
 												<div class="col-sm-8">
 													<select class="form-control" name="block_type" required>
-														<option value="male">Male Block</option>
-														<option value="female">Female Block</option>
+														<option value="Male">Male</option>
+														<option value="Female">Female</option>
 													</select>
 												</div>
 											</div>

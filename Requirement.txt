@@ -8,7 +8,8 @@ cheleder north/south block
 
 4. student ke ak room theke arek room change korar option 
 
-5. Student registration e state indian baad e bangladesh er jela gula
+5. Student registration e state indian baad e bangladesh er jela gula  
+=> Done
 
 6. in admin dashboard -> 
 Hall names = different type halls
@@ -26,13 +27,33 @@ remove courses
 
 9. ADMIN Add room -> hall and block form
 10. ADMIN student Registration -> hall and block on form -> popup if not avialable room 
-		duration max. 6 months sore 6 years porjnto thakbe
+
+		duration max. 6 months sore 6 years porjnto thakbe (Done)
+
 11. ADMIN manage students -> can be changeable room
 
 
 
 Student panel
-- Can able to add picture
+- Can able to add picture (Done)
 - My profile to get whole data 
-Book hostel er moddhe hall ar block thakbe & duration 6 years porjnto
+Book hostel er moddhe hall ar block thakbe & duration 6 years porjnto (Done)
+
+
+
+Credentials 
+admin
+--------
+anuj.lpu1@gmail.com
+Test@1234
+
+
+Student
+--------
+test@gmail.com
+Test@123
+
+
+Division List: https://github.com/nuhil/bangladesh-geocode/blob/master/divisions/divisions.sql
+District List: https://github.com/nuhil/bangladesh-geocode/blob/master/districts/districts.sql
 - my room -> Available room in dashboard 

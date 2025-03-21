@@ -25,15 +25,15 @@ if ($_POST['submit']) {
 	$gurcntno = $_POST['gcontact'];
 	$caddress = $_POST['address'];
 	$ccity = $_POST['city'];
-	$cstate = $_POST['state'];
+	$cdistrict = $_POST['district'];
 	$cpincode = $_POST['pincode'];
 	$paddress = $_POST['paddress'];
 	$pcity = $_POST['pcity'];
-	$pstate = $_POST['pstate'];
+	$pdistrict = $_POST['pdistrict'];
 	$ppincode = $_POST['ppincode'];
-	$query = "insert into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	$query = "insert into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresDistrict,corresPincode,pmntAddress,pmntCity,pmnatetDistrict,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	$stmt = $mysqli->prepare($query);
-	$rc = $stmt->bind_param('iiiisisissssisississsisssi', $roomno, $seater, $feespm, $foodstatus, $stayfrom, $duration, $course, $regno, $fname, $mname, $lname, $gender, $contactno, $emailid, $emcntno, $gurname, $gurrelation, $gurcntno, $caddress, $ccity, $cstate, $cpincode, $paddress, $pcity, $pstate, $ppincode);
+	$rc = $stmt->bind_param('iiiisisissssisississsisssi', $roomno, $seater, $feespm, $foodstatus, $stayfrom, $duration, $course, $regno, $fname, $mname, $lname, $gender, $contactno, $emailid, $emcntno, $gurname, $gurrelation, $gurcntno, $caddress, $ccity, $cdistrict, $cpincode, $paddress, $pcity, $pdistrict, $ppincode);
 	$stmt->execute();
 	$stmt->close();
 
@@ -74,7 +74,7 @@ if ($_POST['submit']) {
 				type: "POST",
 				url: "get_seater.php",
 				data: 'roomid=' + val,
-				success: function (data) {
+				success: function(data) {
 					//alert(data);
 					$('#seater').val(data);
 				}
@@ -84,7 +84,7 @@ if ($_POST['submit']) {
 				type: "POST",
 				url: "get_seater.php",
 				data: 'rid=' + val,
-				success: function (data) {
+				success: function(data) {
 					//alert(data);
 					$('#fpm').val(data);
 				}
@@ -123,18 +123,15 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Room no. </label>
 												<div class="col-sm-8">
-													<select name="room" id="room" class="form-control"
-														onChange="getSeater(this.value);" onBlur="checkAvailability()"
-														required>
+													<select name="room" id="room" class="form-control" onChange="getSeater(this.value);" onBlur="checkAvailability()" required>
 														<option value="">Select Room</option>
 														<?php $query = "SELECT * FROM rooms";
 														$stmt2 = $mysqli->prepare($query);
 														$stmt2->execute();
 														$res = $stmt2->get_result();
 														while ($row = $res->fetch_object()) {
-															?>
-															<option value="<?php echo $row->room_no; ?>">
-																<?php echo $row->room_no; ?></option>
+														?>
+															<option value="<?php echo $row->room_no; ?>"> <?php echo $row->room_no; ?></option>
 														<?php } ?>
 													</select>
 													<span id="room-availability-status" style="font-size:12px;"></span>
@@ -159,10 +156,8 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Food Status</label>
 												<div class="col-sm-8">
-													<input type="radio" value="0" name="foodstatus" checked="checked">
-													Without Food
-													<input type="radio" value="1" name="foodstatus"> With Food(Rs 200.00
-													Per Month Extra)
+													<input type="radio" value="0" name="foodstatus" checked="checked"> Without Food
+													<input type="radio" value="1" name="foodstatus"> With Food(Rs 200.00 Per Month Extra)
 												</div>
 											</div>
 
@@ -177,19 +172,13 @@ if ($_POST['submit']) {
 												<label class="col-sm-2 control-label">Duration</label>
 												<div class="col-sm-8">
 													<select name="duration" id="duration" class="form-control">
-														<option value="">Select Duration in Month</option>
+														<option value="">Select Duration in Years</option>
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
 														<option value="4">4</option>
 														<option value="5">5</option>
 														<option value="6">6</option>
-														<option value="7">7</option>
-														<option value="8">8</option>
-														<option value="9">9</option>
-														<option value="10">10</option>
-														<option value="11">11</option>
-														<option value="12">12</option>
 													</select>
 												</div>
 											</div>
@@ -202,7 +191,7 @@ if ($_POST['submit']) {
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">course </label>
+												<label class="col-sm-2 control-label">Course </label>
 												<div class="col-sm-8">
 													<select name="course" id="course" class="form-control" required>
 														<option value="">Select Course</option>
@@ -211,10 +200,8 @@ if ($_POST['submit']) {
 														$stmt2->execute();
 														$res = $stmt2->get_result();
 														while ($row = $res->fetch_object()) {
-															?>
-															<option value="<?php echo $row->course_fn; ?>">
-																<?php echo $row->course_fn; ?>&nbsp;&nbsp;(<?php echo $row->course_sn; ?>)
-															</option>
+														?>
+															<option value="<?php echo $row->course_fn; ?>"><?php echo $row->course_fn; ?>&nbsp;&nbsp;(<?php echo $row->course_sn; ?>)</option>
 														<?php } ?>
 													</select>
 												</div>
@@ -223,8 +210,7 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Registration No : </label>
 												<div class="col-sm-8">
-													<input type="text" name="regno" id="regno" class="form-control"
-														required="required">
+													<input type="text" name="regno" id="regno" class="form-control" required="required">
 												</div>
 											</div>
 
@@ -232,8 +218,7 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">First Name : </label>
 												<div class="col-sm-8">
-													<input type="text" name="fname" id="fname" class="form-control"
-														required="required">
+													<input type="text" name="fname" id="fname" class="form-control" required="required">
 												</div>
 											</div>
 
@@ -247,8 +232,7 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Last Name : </label>
 												<div class="col-sm-8">
-													<input type="text" name="lname" id="lname" class="form-control"
-														required="required">
+													<input type="text" name="lname" id="lname" class="form-control" required="required">
 												</div>
 											</div>
 
@@ -267,8 +251,7 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Contact No : </label>
 												<div class="col-sm-8">
-													<input type="text" name="contact" id="contact" class="form-control"
-														required="required">
+													<input type="text" name="contact" id="contact" class="form-control" required="required">
 												</div>
 											</div>
 
@@ -276,40 +259,35 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Email id : </label>
 												<div class="col-sm-8">
-													<input type="email" name="email" id="email" class="form-control"
-														required="required">
+													<input type="email" name="email" id="email" class="form-control" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Emergency Contact: </label>
 												<div class="col-sm-8">
-													<input type="text" name="econtact" id="econtact"
-														class="form-control" required="required">
+													<input type="text" name="econtact" id="econtact" class="form-control" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Guardian Name : </label>
 												<div class="col-sm-8">
-													<input type="text" name="gname" id="gname" class="form-control"
-														required="required">
+													<input type="text" name="gname" id="gname" class="form-control" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Guardian Relation : </label>
 												<div class="col-sm-8">
-													<input type="text" name="grelation" id="grelation"
-														class="form-control" required="required">
+													<input type="text" name="grelation" id="grelation" class="form-control" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Guardian Contact no : </label>
 												<div class="col-sm-8">
-													<input type="text" name="gcontact" id="gcontact"
-														class="form-control" required="required">
+													<input type="text" name="gcontact" id="gcontact" class="form-control" required="required">
 												</div>
 											</div>
 
@@ -323,32 +301,29 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Address : </label>
 												<div class="col-sm-8">
-													<textarea rows="5" name="address" id="address" class="form-control"
-														required="required"></textarea>
+													<textarea rows="5" name="address" id="address" class="form-control" required="required"></textarea>
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">City : </label>
 												<div class="col-sm-8">
-													<input type="text" name="city" id="city" class="form-control"
-														required="required">
+													<input type="text" name="city" id="city" class="form-control" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">State </label>
+												<label class="col-sm-2 control-label">District </label>
 												<div class="col-sm-8">
-													<select name="state" id="state" class="form-control" required>
-														<option value="">Select State</option>
-														<?php $query = "SELECT * FROM states";
+													<select name="district" id="district" class="form-control" required>
+														<option value="">Select District</option>
+														<?php $query = "SELECT * FROM districts ORDER BY name";
 														$stmt2 = $mysqli->prepare($query);
 														$stmt2->execute();
 														$res = $stmt2->get_result();
 														while ($row = $res->fetch_object()) {
-															?>
-															<option value="<?php echo $row->State; ?>">
-																<?php echo $row->State; ?></option>
+														?>
+															<option value="<?php echo $row->name; ?>"><?php echo $row->name; ?></option>
 														<?php } ?>
 													</select>
 												</div>
@@ -357,8 +332,7 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Pincode : </label>
 												<div class="col-sm-8">
-													<input type="text" name="pincode" id="pincode" class="form-control"
-														required="required">
+													<input type="text" name="pincode" id="pincode" class="form-control" required="required">
 												</div>
 											</div>
 
@@ -370,8 +344,7 @@ if ($_POST['submit']) {
 
 
 											<div class="form-group">
-												<label class="col-sm-5 control-label">Permanent Address same as
-													Correspondense address : </label>
+												<label class="col-sm-5 control-label">Permanent Address same as Correspondense address : </label>
 												<div class="col-sm-4">
 													<input type="checkbox" name="adcheck" value="1" />
 												</div>
@@ -381,32 +354,29 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Address : </label>
 												<div class="col-sm-8">
-													<textarea rows="5" name="paddress" id="paddress"
-														class="form-control" required="required"></textarea>
+													<textarea rows="5" name="paddress" id="paddress" class="form-control" required="required"></textarea>
 												</div>
 											</div>
 
 											<div class="form-group">
 												<label class="col-sm-2 control-label">City : </label>
 												<div class="col-sm-8">
-													<input type="text" name="pcity" id="pcity" class="form-control"
-														required="required">
+													<input type="text" name="pcity" id="pcity" class="form-control" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
-												<label class="col-sm-2 control-label">State </label>
+												<label class="col-sm-2 control-label">District </label>
 												<div class="col-sm-8">
-													<select name="pstate" id="pstate" class="form-control" required>
-														<option value="">Select State</option>
-														<?php $query = "SELECT * FROM states";
+													<select name="pdistrict" id="pdistrict" class="form-control" required>
+														<option value="">Select District</option>
+														<?php $query = "SELECT * FROM districts ORDER BY name";
 														$stmt2 = $mysqli->prepare($query);
 														$stmt2->execute();
 														$res = $stmt2->get_result();
 														while ($row = $res->fetch_object()) {
-															?>
-															<option value="<?php echo $row->State; ?>">
-																<?php echo $row->State; ?></option>
+														?>
+															<option value="<?php echo $row->name; ?>"><?php echo $row->name; ?></option>
 														<?php } ?>
 													</select>
 												</div>
@@ -415,16 +385,14 @@ if ($_POST['submit']) {
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Pincode : </label>
 												<div class="col-sm-8">
-													<input type="text" name="ppincode" id="ppincode"
-														class="form-control" required="required">
+													<input type="text" name="ppincode" id="ppincode" class="form-control" required="required">
 												</div>
 											</div>
 
 
 											<div class="col-sm-6 col-sm-offset-4">
 												<button class="btn btn-default" type="submit">Cancel</button>
-												<input type="submit" name="submit" Value="Register"
-													class="btn btn-primary">
+												<input type="submit" name="submit" Value="Register" class="btn btn-primary">
 											</div>
 										</form>
 
@@ -451,8 +419,8 @@ if ($_POST['submit']) {
 	<script src="js/main.js"></script>
 </body>
 <script type="text/javascript">
-	$(document).ready(function () {
-		$('input[type="checkbox"]').click(function () {
+	$(document).ready(function() {
+		$('input[type="checkbox"]').click(function() {
 			if ($(this).prop("checked") == true) {
 				$('#paddress').val($('#address').val());
 				$('#pcity').val($('#city').val());
@@ -470,11 +438,11 @@ if ($_POST['submit']) {
 			url: "check_availability.php",
 			data: 'roomno=' + $("#room").val(),
 			type: "POST",
-			success: function (data) {
+			success: function(data) {
 				$("#room-availability-status").html(data);
 				$("#loaderIcon").hide();
 			},
-			error: function () { }
+			error: function() {}
 		});
 	}
 </script>
