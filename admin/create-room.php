@@ -100,6 +100,18 @@ if ($_POST['submit']) {
 												</div>
 											</div>
 											<div class="form-group">
+												<label class="col-sm-2 control-label">Select Hall </label>
+												<div class="col-sm-8">
+													<Select name="block" class="form-control" required>
+														<option value="">Select Hall</option>
+														<option value="1">A</option>
+														<option value="2">B</option>
+														<option value="3">C</option>
+														<option value="4">D</option>
+													</Select>
+												</div>
+											</div>
+											<div class="form-group">
 												<label class="col-sm-2 control-label">Select Seater </label>
 												<div class="col-sm-8">
 													<Select name="seater" class="form-control" required>
