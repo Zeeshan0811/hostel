@@ -19,6 +19,8 @@ if (isset($_GET['id'])) {
 // Update student data
 if (isset($_POST['update'])) {
     $id = intval($_POST['id']);
+    $hall_id = $_POST['hall_id'];
+    $block_id = $_POST['block_id'];
     $roomno = $_POST['room'];
     $seater = $_POST['seater'];
     $feespm = $_POST['fpm'];
@@ -39,16 +41,16 @@ if (isset($_POST['update'])) {
     $gurcntno = $_POST['gcontact'];
     $caddress = $_POST['address'];
     $ccity = $_POST['city'];
-    $cstate = $_POST['state'];
+    $cdistrict = $_POST['district'];
     $cpincode = $_POST['pincode'];
     $paddress = $_POST['paddress'];
     $pcity = $_POST['pcity'];
-    $pstate = $_POST['pstate'];
+    $pdistrict = $_POST['pdistrict'];
     $ppincode = $_POST['ppincode'];
 
-    $query = "UPDATE registration SET roomno=?, seater=?, feespm=?, foodstatus=?, stayfrom=?, duration=?, course=?, regno=?, firstName=?, middleName=?, lastName=?, gender=?, contactno=?, emailid=?, egycontactno=?, guardianName=?, guardianRelation=?, guardianContactno=?, corresAddress=?, corresCIty=?, corresState=?, corresPincode=?, pmntAddress=?, pmntCity=?, pmnatetState=?, pmntPincode=? WHERE id=?";
+    $query = "UPDATE registration SET hall_id=?,block_id=?,roomno=?, seater=?, feespm=?, foodstatus=?, stayfrom=?, duration=?, course=?, regno=?, firstName=?, middleName=?, lastName=?, gender=?, contactno=?, emailid=?, egycontactno=?, guardianName=?, guardianRelation=?, guardianContactno=?, corresAddress=?, corresCIty=?, corresDistrict=?, corresPincode=?, pmntAddress=?, pmntCity=?, pmnatetDistrict=?, pmntPincode=? WHERE id=?";
     $stmt = $mysqli->prepare($query);
-    $stmt->bind_param('iiiisisissssisississsisssii', $roomno, $seater, $feespm, $foodstatus, $stayfrom, $duration, $course, $regno, $fname, $mname, $lname, $gender, $contactno, $emailid, $emcntno, $gurname, $gurrelation, $gurcntno, $caddress, $ccity, $cstate, $cpincode, $paddress, $pcity, $pstate, $ppincode, $id);
+    $stmt->bind_param('iiiiiisisissssisississsisssii', $hall_id, $block_id, $roomno, $seater, $feespm, $foodstatus, $stayfrom, $duration, $course, $regno, $fname, $mname, $lname, $gender, $contactno, $emailid, $emcntno, $gurname, $gurrelation, $gurcntno, $caddress, $ccity, $cdistrict, $cpincode, $paddress, $pcity, $pdistrict, $ppincode, $id);
     $stmt->execute();
     $stmt->close();
 
@@ -80,6 +82,29 @@ if (isset($_POST['update'])) {
         <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
         <script type="text/javascript" src="js/validation.min.js"></script>
+        <script>
+            function getSeater(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data: 'roomid=' + val,
+                    success: function(data) {
+                        //alert(data);
+                        $('#seater').val(data);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data: 'rid=' + val,
+                    success: function(data) {
+                        //alert(data);
+                        $('#fpm').val(data);
+                    }
+                });
+            }
+        </script>
     </head>
 </head>
 
@@ -106,12 +131,46 @@ if (isset($_POST['update'])) {
                                                     <h4 style="color: green" align="left">Room Related info </h4>
                                                 </label>
                                             </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Select Hall </label>
+                                                <div class="col-sm-8">
+                                                    <Select name="hall_id" class="form-control" required>
+                                                        <option value="">Select Hall</option>
+                                                        <?php
+                                                        $query = "SELECT * FROM halls";
+                                                        $stmt2 = $mysqli->prepare($query);
+                                                        $stmt2->execute();
+                                                        $res = $stmt2->get_result();
+                                                        while ($halls = $res->fetch_object()) {
+                                                        ?>
+                                                            <option value="<?php echo $halls->id; ?>" <?php echo ($halls->id ==  $student['hall_id']) ? "selected" : "";  ?>><?php echo $halls->hall_name; ?></option>
+                                                        <?php } ?>
+                                                    </Select>
+                                                </div>
+                                            </div>
 
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Select Block </label>
+                                                <div class="col-sm-8">
+                                                    <Select name="block_id" class="form-control" required>
+                                                        <option value="">Select Block</option>
+                                                        <?php
+                                                        $query = "SELECT * FROM blocks";
+                                                        $stmt2 = $mysqli->prepare($query);
+                                                        $stmt2->execute();
+                                                        $res = $stmt2->get_result();
+                                                        while ($blocks = $res->fetch_object()) {
+                                                        ?>
+                                                            <option value="<?php echo $blocks->id; ?>" <?php echo ($blocks->id ==  $student['block_id']) ? "selected" : "";  ?>><?php echo $blocks->block_name . " (" . $blocks->block_type . ")"; ?></option>
+                                                        <?php } ?>
+                                                    </Select>
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Room no. </label>
                                                 <div class="col-sm-8">
                                                     <select name="room" id="room" class="form-control"
-                                                        onChange="getSeater(this.value);" onBlur="checkAvailability()"
+                                                        onChange="getSeater(this.value);checkAvailability();"
                                                         required>
                                                         <option value="">Select Room</option>
                                                         <?php
@@ -328,21 +387,21 @@ if (isset($_POST['update'])) {
                                                 </div>
                                             </div>
 
+
+
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label">State </label>
+                                                <label class="col-sm-2 control-label">District </label>
                                                 <div class="col-sm-8">
-                                                    <select name="state" id="state" class="form-control" required>
-                                                        <option value="">Select State</option>
-                                                        <?php
-                                                        $query = "SELECT * FROM states";
+                                                    <select name="district" id="district" class="form-control" required>
+                                                        <option value="">Select District</option>
+                                                        <?php $query = "SELECT * FROM districts ORDER BY name";
                                                         $stmt2 = $mysqli->prepare($query);
                                                         $stmt2->execute();
                                                         $res = $stmt2->get_result();
                                                         while ($row = $res->fetch_object()) {
-                                                            $selected = ($row->State == $student['corresState']) ? 'selected' : '';
-                                                            echo "<option value='$row->State' $selected>$row->State</option>";
-                                                        }
-                                                        ?>
+                                                            $selected = ($row->name == $student['corresDistrict']) ? 'selected' : '';
+                                                            echo "<option value='$row->name' $selected>$row->name</option>";
+                                                        } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -389,21 +448,20 @@ if (isset($_POST['update'])) {
                                                 </div>
                                             </div>
 
+
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label">State </label>
+                                                <label class="col-sm-2 control-label">District </label>
                                                 <div class="col-sm-8">
-                                                    <select name="pstate" id="pstate" class="form-control" required>
-                                                        <option value="">Select State</option>
-                                                        <?php
-                                                        $query = "SELECT * FROM states";
+                                                    <select name="pdistrict" id="pdistrict" class="form-control" required>
+                                                        <option value="">Select District</option>
+                                                        <?php $query = "SELECT * FROM districts ORDER BY name";
                                                         $stmt2 = $mysqli->prepare($query);
                                                         $stmt2->execute();
                                                         $res = $stmt2->get_result();
                                                         while ($row = $res->fetch_object()) {
-                                                            $selected = ($row->State == $student['pmnatetState']) ? 'selected' : '';
-                                                            echo "<option value='$row->State' $selected>$row->State</option>";
-                                                        }
-                                                        ?>
+                                                            $selected = ($row->name == $student['pmnatetDistrict']) ? 'selected' : '';
+                                                            echo "<option value='$row->name' $selected>$row->name</option>";
+                                                        } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -443,6 +501,24 @@ if (isset($_POST['update'])) {
             $('#pstate').val($('#state').val());
             $('#ppincode').val($('#pincode').val());
         }
+    }
+</script>
+<script>
+    function checkAvailability() {
+        $("#loaderIcon").show();
+        jQuery.ajax({
+            url: "check_availability.php",
+            data: 'roomno=' + $("#room").val(),
+            type: "POST",
+            success: function(data) {
+                $("#room-availability-status").html(data);
+                if (data.includes("full")) {
+                    alert(data.replace(/<[^>]*>/g, '').trim());
+                }
+                $("#loaderIcon").hide();
+            },
+            error: function() {}
+        });
     }
 </script>
 
