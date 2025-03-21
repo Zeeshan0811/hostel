@@ -5,7 +5,7 @@ include('includes/checklogin.php');
 check_login();
 
 // Delete block functionality
-if(isset($_GET['del'])) {
+if (isset($_GET['del'])) {
     $id = intval($_GET['del']);
     $adn = "DELETE FROM blocks WHERE id=?";
     $stmt = $mysqli->prepare($adn);
@@ -37,10 +37,10 @@ if(isset($_GET['del'])) {
 </head>
 
 <body>
-    <?php include('includes/header.php');?>
+    <?php include('includes/header.php'); ?>
 
     <div class="ts-main-content">
-        <?php include('includes/sidebar.php');?>
+        <?php include('includes/sidebar.php'); ?>
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
@@ -82,7 +82,7 @@ if(isset($_GET['del'])) {
                                                 <td><?php echo $cnt; ?></td>
                                                 <td><?php echo ucfirst($row->block_type); ?></td>
                                                 <td><?php echo $row->block_name; ?></td>
-                                                <td><?php echo $row->posting_date; ?></td>
+                                                <td><?php echo $row->created_at; ?></td>
                                                 <td>
                                                     <a href="edit-block.php?id=<?php echo $row->id; ?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
                                                     <a href="manage-blocks.php?del=<?php echo $row->id; ?>" onclick="return confirm('Do you want to delete this block?');"><i class="fa fa-close"></i></a>
