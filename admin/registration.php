@@ -5,6 +5,8 @@ include('includes/checklogin.php');
 check_login();
 //code for registration
 if ($_POST['submit']) {
+	$hall_id = $_POST['hall_id'];
+	$block_id = $_POST['block_id'];
 	$roomno = $_POST['room'];
 	$seater = $_POST['seater'];
 	$feespm = $_POST['fpm'];
@@ -31,9 +33,9 @@ if ($_POST['submit']) {
 	$pcity = $_POST['pcity'];
 	$pdistrict = $_POST['pdistrict'];
 	$ppincode = $_POST['ppincode'];
-	$query = "insert into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresDistrict,corresPincode,pmntAddress,pmntCity,pmnatetDistrict,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	$query = "insert into  registration(hall_id,block_id,roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresDistrict,corresPincode,pmntAddress,pmntCity,pmnatetDistrict,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	$stmt = $mysqli->prepare($query);
-	$rc = $stmt->bind_param('iiiisisissssisississsisssi', $roomno, $seater, $feespm, $foodstatus, $stayfrom, $duration, $course, $regno, $fname, $mname, $lname, $gender, $contactno, $emailid, $emcntno, $gurname, $gurrelation, $gurcntno, $caddress, $ccity, $cdistrict, $cpincode, $paddress, $pcity, $pdistrict, $ppincode);
+	$rc = $stmt->bind_param('iiiiiisisissssisississsisssi', $hall_id, $block_id, $roomno, $seater, $feespm, $foodstatus, $stayfrom, $duration, $course, $regno, $fname, $mname, $lname, $gender, $contactno, $emailid, $emcntno, $gurname, $gurrelation, $gurcntno, $caddress, $ccity, $cdistrict, $cpincode, $paddress, $pcity, $pdistrict, $ppincode);
 	$stmt->execute();
 	$stmt->close();
 
@@ -121,17 +123,53 @@ if ($_POST['submit']) {
 											</div>
 
 											<div class="form-group">
+												<label class="col-sm-2 control-label">Select Hall </label>
+												<div class="col-sm-8">
+													<Select name="hall_id" class="form-control" required>
+														<option value="">Select Hall</option>
+														<?php
+														$query = "SELECT * FROM halls";
+														$stmt2 = $mysqli->prepare($query);
+														$stmt2->execute();
+														$res = $stmt2->get_result();
+														while ($halls = $res->fetch_object()) {
+														?>
+															<option value="<?php echo $halls->id; ?>"><?php echo $halls->hall_name; ?></option>
+														<?php } ?>
+													</Select>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Select Block </label>
+												<div class="col-sm-8">
+													<Select name="block_id" class="form-control" required>
+														<option value="">Select Block</option>
+														<?php
+														$query = "SELECT * FROM blocks";
+														$stmt2 = $mysqli->prepare($query);
+														$stmt2->execute();
+														$res = $stmt2->get_result();
+														while ($blocks = $res->fetch_object()) {
+														?>
+															<option value="<?php echo $blocks->id; ?>"><?php echo $blocks->block_name . " (" . $blocks->block_type . ")"; ?></option>
+														<?php } ?>
+													</Select>
+												</div>
+											</div>
+
+											<div class="form-group">
 												<label class="col-sm-2 control-label">Room no. </label>
 												<div class="col-sm-8">
-													<select name="room" id="room" class="form-control" onChange="getSeater(this.value);" onBlur="checkAvailability()" required>
+													<select name="room" id="room" class="form-control" onChange="getSeater(this.value);checkAvailability();" required>
 														<option value="">Select Room</option>
 														<?php $query = "SELECT * FROM rooms";
 														$stmt2 = $mysqli->prepare($query);
 														$stmt2->execute();
 														$res = $stmt2->get_result();
-														while ($row = $res->fetch_object()) {
+														while ($rooms = $res->fetch_object()) {
 														?>
-															<option value="<?php echo $row->room_no; ?>"> <?php echo $row->room_no; ?></option>
+															<option value="<?php echo $rooms->room_no; ?>"> <?php echo $rooms->room_no; ?></option>
 														<?php } ?>
 													</select>
 													<span id="room-availability-status" style="font-size:12px;"></span>
@@ -440,6 +478,9 @@ if ($_POST['submit']) {
 			type: "POST",
 			success: function(data) {
 				$("#room-availability-status").html(data);
+				if (data.includes("full")) {
+					alert(data.replace(/<[^>]*>/g, '').trim());
+				}
 				$("#loaderIcon").hide();
 			},
 			error: function() {}

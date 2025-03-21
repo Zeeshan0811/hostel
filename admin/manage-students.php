@@ -66,6 +66,8 @@ if (isset($_GET['del'])) {
 											<th>Student Name</th>
 											<th>Reg no</th>
 											<th>Contact no </th>
+											<th>Hall </th>
+											<th>Block </th>
 											<th>room no </th>
 											<th>Seater </th>
 											<th>Staying From </th>
@@ -78,6 +80,8 @@ if (isset($_GET['del'])) {
 											<th>Student Name</th>
 											<th>Reg no</th>
 											<th>Contact no </th>
+											<th>Hall </th>
+											<th>Block </th>
 											<th>Room no </th>
 											<th>Seater </th>
 											<th>Staying From </th>
@@ -87,7 +91,12 @@ if (isset($_GET['del'])) {
 									<tbody>
 										<?php
 										$aid = $_SESSION['id'];
-										$ret = "select * from registration";
+										$ret = "
+											select registration.*, halls.hall_name, block.block_type, block.block_name
+											From registration
+											LEFT JOIN halls ON registration.hall_id = halls.id
+											LEFT JOIN blocks AS block ON registration.block_id = block.id
+										";
 										$stmt = $mysqli->prepare($ret);
 										//$stmt->bind_param('i',$aid);
 										$stmt->execute(); //ok
@@ -100,6 +109,8 @@ if (isset($_GET['del'])) {
 												<td><?php echo $row->firstName; ?><?php echo $row->middleName; ?><?php echo $row->lastName; ?></td>
 												<td><?php echo $row->regno; ?></td>
 												<td><?php echo $row->contactno; ?></td>
+												<td><?php echo $row->hall_name; ?></td>
+												<td><?php echo $row->block_name . " (" . $row->block_type . ")"; ?></td>
 												<td><?php echo $row->roomno; ?></td>
 												<td><?php echo $row->seater; ?></td>
 												<td><?php echo $row->stayfrom; ?></td>
