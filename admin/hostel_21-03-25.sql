@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2025 at 08:24 PM
+-- Generation Time: Mar 22, 2025 at 12:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -210,6 +210,8 @@ INSERT INTO `halls` (`id`, `hall_name`, `created_at`) VALUES
 
 CREATE TABLE `registration` (
   `id` int(11) NOT NULL,
+  `hall_id` int(11) DEFAULT NULL,
+  `block_id` int(11) DEFAULT NULL,
   `roomno` int(11) DEFAULT NULL,
   `seater` int(11) DEFAULT NULL,
   `feespm` int(11) DEFAULT NULL,
@@ -247,11 +249,11 @@ CREATE TABLE `registration` (
 -- Dumping data for table `registration`
 --
 
-INSERT INTO `registration` (`id`, `roomno`, `seater`, `feespm`, `foodstatus`, `stayfrom`, `duration`, `course`, `regno`, `firstName`, `middleName`, `lastName`, `gender`, `contactno`, `emailid`, `profile_picture`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `corresPincode`, `pmntAddress`, `pmntCity`, `pmnatetState`, `pmntPincode`, `postingDate`, `updationDate`, `corresDistrict`, `pmnatetDistrict`) VALUES
-(6, 100, 5, 8000, 0, '2016-04-22', 5, 'Bachelor  of Technology', 10806121, 'Anuj', '', 'kumar', 'male', 8285703354, 'anuj.lpu1@gmail.com', NULL, 0, 'XYZ', 'Mother', 8285703354, 'New Delhi India', 'Aligarh', 'Uttar Pradesh', 202001, 'New Delhi India', 'Delhi', 'Delhi (NCT)', 202001, '2016-04-16 08:24:09', '', NULL, NULL),
-(7, 100, 5, 8000, 1, '2016-06-17', 4, 'Bachelor of Engineering', 108061211, 'Test', 'test', 'kumar', 'male', 8467067344, 'test@gmail.com', NULL, 123456789, 'test', 'test', 1236547890, 'New Delhi India', 'Aligarh', 'Uttar Pradesh', 202001, 'New Delhi India', 'Delhi', 'Delhi (NCT)', 202001, '2016-06-23 11:54:35', '', NULL, NULL),
-(8, 112, 3, 4000, 0, '2016-06-27', 5, 'Bachelor  of Science', 102355, 'rahul', 'kumar', 'Singh', 'male', 6786786786, 'rahul@gmail.com', NULL, 789632587, 'demo', 'demo', 1234567890, 'New Delhi', 'Delhi', 'Delhi (NCT)', 110001, 'New Delhi', 'Delhi', 'Delhi (NCT)', 110001, '2016-06-26 16:31:08', '', NULL, NULL),
-(9, 132, 5, 2000, 1, '2016-06-28', 6, 'Bachelor of Engineering', 586952, 'Ajay', '', 'kumar', 'male', 8596185625, 'ajay@gmail.com', NULL, 8285703354, 'demo', 'demo', 8285703354, 'New Delhi India', 'Aligarh', 'Uttar Pradesh', 202001, 'New Delhi India', 'Delhi', 'Delhi (NCT)', 202001, '2016-06-26 16:40:07', '', NULL, NULL);
+INSERT INTO `registration` (`id`, `hall_id`, `block_id`, `roomno`, `seater`, `feespm`, `foodstatus`, `stayfrom`, `duration`, `course`, `regno`, `firstName`, `middleName`, `lastName`, `gender`, `contactno`, `emailid`, `profile_picture`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `corresPincode`, `pmntAddress`, `pmntCity`, `pmnatetState`, `pmntPincode`, `postingDate`, `updationDate`, `corresDistrict`, `pmnatetDistrict`) VALUES
+(6, NULL, NULL, 100, 5, 8000, 0, '2016-04-22', 5, 'Bachelor  of Technology', 10806121, 'Anuj', '', 'kumar', 'male', 8285703354, 'anuj.lpu1@gmail.com', NULL, 0, 'XYZ', 'Mother', 8285703354, 'New Delhi India', 'Aligarh', 'Uttar Pradesh', 202001, 'New Delhi India', 'Delhi', 'Delhi (NCT)', 202001, '2016-04-16 08:24:09', '', 'Bhola', 'Barisal'),
+(7, NULL, NULL, 100, 5, 8000, 1, '2016-06-17', 4, 'Bachelor of Engineering', 108061211, 'Test', 'test', 'kumar', 'male', 8467067344, 'test@gmail.com', NULL, 123456789, 'test', 'test', 1236547890, 'New Delhi India', 'Aligarh', 'Uttar Pradesh', 202001, 'New Delhi India', 'Delhi', 'Delhi (NCT)', 202001, '2016-06-23 11:54:35', '', NULL, NULL),
+(8, NULL, NULL, 112, 3, 4000, 0, '2016-06-27', 5, 'Bachelor  of Science', 102355, 'rahul', 'kumar', 'Singh', 'male', 6786786786, 'rahul@gmail.com', NULL, 789632587, 'demo', 'demo', 1234567890, 'New Delhi', 'Delhi', 'Delhi (NCT)', 110001, 'New Delhi', 'Delhi', 'Delhi (NCT)', 110001, '2016-06-26 16:31:08', '', NULL, NULL),
+(9, 1, 1, 201, 2, 6000, 1, '2016-06-28', 6, 'Bachelor of Engineering', 586952, 'Ajay', '', 'kumar', 'male', 8596185625, 'ajay@gmail.com', NULL, 8285703354, 'demo', 'demo', 8285703354, 'New Delhi India', 'Aligarh', 'Uttar Pradesh', 202001, 'New Delhi India', 'Delhi', 'Delhi (NCT)', 202001, '2016-06-26 16:40:07', '', 'Sirajganj', 'Sylhet');
 
 -- --------------------------------------------------------
 
@@ -274,13 +276,13 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `hall_id`, `block_id`, `seater`, `room_no`, `fees`, `posting_date`) VALUES
-(1, NULL, NULL, 5, 100, 8000, '2016-04-11 22:45:43'),
+(1, NULL, NULL, 1, 100, 8000, '2016-04-11 22:45:43'),
 (2, NULL, NULL, 2, 201, 6000, '2016-04-12 01:30:47'),
 (3, NULL, NULL, 2, 200, 6000, '2016-04-12 01:30:58'),
 (4, NULL, NULL, 3, 112, 4000, '2016-04-12 01:31:07'),
 (5, NULL, NULL, 5, 132, 2000, '2016-04-12 01:31:15'),
 (6, NULL, NULL, 3, 503, 123, '2025-03-21 11:07:46'),
-(7, 1, 2, 2, 2324, 4, '2025-03-21 11:10:40');
+(7, 1, 4, 4, 2324, 40, '2025-03-21 11:10:40');
 
 -- --------------------------------------------------------
 
