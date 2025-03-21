@@ -29,13 +29,13 @@ remove courses
 10. ADMIN student Registration -> hall and block on form -> popup if not avialable room 
 
 		duration max. 6 months sore 6 years porjnto thakbe (Done)
-		
+
 11. ADMIN manage students -> can be changeable room
 
 
 
 Student panel
-- Can able to add picture
+- Can able to add picture (Done)
 - My profile to get whole data 
 Book hostel er moddhe hall ar block thakbe & duration 6 years porjnto (Done)
 
