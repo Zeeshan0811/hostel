@@ -5,7 +5,7 @@ include('includes/checklogin.php');
 check_login();
 
 // Delete block functionality
-if(isset($_GET['del'])) {
+if (isset($_GET['del'])) {
     $id = intval($_GET['del']);
     $adn = "DELETE FROM blocks WHERE id=?";
     $stmt = $mysqli->prepare($adn);
@@ -25,7 +25,7 @@ if(isset($_GET['del'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="theme-color" content="#3e454c">
-    <title>Manage Blocks</title>
+    <title>Manage Courses</title>
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
@@ -37,10 +37,10 @@ if(isset($_GET['del'])) {
 </head>
 
 <body>
-    <?php include('includes/header.php');?>
+    <?php include('includes/header.php'); ?>
 
     <div class="ts-main-content">
-        <?php include('includes/sidebar.php');?>
+        <?php include('includes/sidebar.php'); ?>
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
@@ -49,7 +49,8 @@ if(isset($_GET['del'])) {
                         <div class="panel panel-default">
                             <div class="panel-heading">All Blocks Details</div>
                             <div class="panel-body">
-                                <table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                <table id="zctb" class="display table table-striped table-bordered table-hover"
+                                    cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>Sno.</th>
@@ -77,18 +78,21 @@ if(isset($_GET['del'])) {
                                         $res = $stmt->get_result();
                                         $cnt = 1;
                                         while ($row = $res->fetch_object()) {
-                                        ?>
+                                            ?>
                                             <tr>
                                                 <td><?php echo $cnt; ?></td>
                                                 <td><?php echo ucfirst($row->block_type); ?></td>
                                                 <td><?php echo $row->block_name; ?></td>
                                                 <td><?php echo $row->posting_date; ?></td>
                                                 <td>
-                                                    <a href="edit-block.php?id=<?php echo $row->id; ?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-                                                    <a href="manage-blocks.php?del=<?php echo $row->id; ?>" onclick="return confirm('Do you want to delete this block?');"><i class="fa fa-close"></i></a>
+                                                    <a href="edit-block.php?id=<?php echo $row->id; ?>"><i
+                                                            class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                                    <a href="manage-blocks.php?del=<?php echo $row->id; ?>"
+                                                        onclick="return confirm('Do you want to delete this block?');"><i
+                                                            class="fa fa-close"></i></a>
                                                 </td>
                                             </tr>
-                                        <?php
+                                            <?php
                                             $cnt++;
                                         }
                                         ?>
