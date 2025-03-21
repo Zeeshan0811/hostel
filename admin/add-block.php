@@ -58,8 +58,8 @@ if (isset($_POST['submit_block'])) {
 												<label class="col-sm-2 control-label">Block Type</label>
 												<div class="col-sm-8">
 													<select class="form-control" name="block_type" required>
-														<option value="Male Block">Male Block</option>
-														<option value="Female Block">Female Block</option>
+														<option value="Male">Male</option>
+														<option value="Female">Female</option>
 													</select>
 												</div>
 											</div>

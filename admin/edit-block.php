@@ -68,8 +68,8 @@ if ($_POST['submit']) {
                                                     <label class="col-sm-2 control-label">Block Type </label>
                                                     <div class="col-sm-8">
                                                         <select class="form-control" name="block_type" required>
-                                                            <option value="Male Block" <?php echo ($row->block_type == 'Male Block') ? 'selected' : ''; ?>>Male Block</option>
-                                                            <option value="Female Block" <?php echo ($row->block_type == 'Female Block') ? 'selected' : ''; ?>>Female Block</option>
+                                                            <option value="Male Block" <?php echo ($row->block_type == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                                            <option value="Female Block" <?php echo ($row->block_type == 'Female') ? 'selected' : ''; ?>>Female</option>
                                                         </select>
                                                     </div>
                                                 </div>

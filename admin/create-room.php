@@ -5,22 +5,24 @@ include('includes/checklogin.php');
 check_login();
 //code for add courses
 if ($_POST['submit']) {
+	$hall_id = $_POST['hall_id'];
+	$block_id = $_POST['block_id'];
 	$seater = $_POST['seater'];
 	$roomno = $_POST['rmno'];
 	$fees = $_POST['fee'];
+
 	$sql = "SELECT room_no FROM rooms where room_no=?";
 	$stmt1 = $mysqli->prepare($sql);
 	$stmt1->bind_param('i', $roomno);
 	$stmt1->execute();
 	$stmt1->store_result();
-	$row_cnt = $stmt1->num_rows;
-	;
+	$row_cnt = $stmt1->num_rows;;
 	if ($row_cnt > 0) {
 		echo "<script>alert('Room alreadt exist');</script>";
 	} else {
-		$query = "insert into  rooms (seater,room_no,fees) values(?,?,?)";
+		$query = "insert into  rooms (hall_id,block_id,seater,room_no,fees) values(?,?,?,?,?)";
 		$stmt = $mysqli->prepare($query);
-		$rc = $stmt->bind_param('iii', $seater, $roomno, $fees);
+		$rc = $stmt->bind_param('iiiii', $hall_id, $block_id, $seater, $roomno, $fees);
 		$stmt->execute();
 		echo "<script>alert('Room has been added successfully');</script>";
 	}
@@ -55,12 +57,9 @@ if ($_POST['submit']) {
 		<?php include('includes/sidebar.php'); ?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
-
 				<div class="row">
 					<div class="col-md-12">
-
 						<h2 class="page-title">Add a Room </h2>
-
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
@@ -73,29 +72,48 @@ if ($_POST['submit']) {
 											</p>
 										<?php } ?>
 										<form method="post" class="form-horizontal">
-
 											<div class="hr-dashed"></div>
 											<div class="form-group">
+												<label class="col-sm-2 control-label">Select Hall </label>
+												<div class="col-sm-8">
+													<Select name="hall_id" class="form-control" required>
+														<option value="">Select Hall</option>
+														<?php
+														$query = "SELECT * FROM halls";
+														$stmt2 = $mysqli->prepare($query);
+														$stmt2->execute();
+														$res = $stmt2->get_result();
+														while ($row = $res->fetch_object()) {
+														?>
+															<option value="<?php echo $row->id; ?>"><?php echo $row->hall_name; ?></option>
+														<?php } ?>
+													</Select>
+												</div>
+											</div>
+											<!-- <div class="form-group">
 												<label class="col-sm-2 control-label">Select Room Type </label>
 												<div class="col-sm-8">
 													<Select name="type" class="form-control" required>
 														<option value="">Select Room Type</option>
-														<option value="1">Boys</option>
-														<option value="2">Girls</option>
+														<option value="Male">Male</option>
+														<option value="Female">Female</option>
 													</Select>
 												</div>
-											</div>
+											</div> -->
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Select Block </label>
 												<div class="col-sm-8">
-													<Select name="block" class="form-control" required>
+													<Select name="block_id" class="form-control" required>
 														<option value="">Select Block</option>
-														<option value="1">A</option>
-														<option value="2">B</option>
-														<option value="3">C</option>
-														<option value="4">D</option>
-														<option value="5">North Block</option>
-														<option value="6">South Block</option>
+														<?php
+														$query = "SELECT * FROM blocks";
+														$stmt2 = $mysqli->prepare($query);
+														$stmt2->execute();
+														$res = $stmt2->get_result();
+														while ($row = $res->fetch_object()) {
+														?>
+															<option value="<?php echo $row->id; ?>"><?php echo $row->block_name . " (" . $row->block_type . ")"; ?></option>
+														<?php } ?>
 													</Select>
 												</div>
 											</div>
@@ -126,31 +144,19 @@ if ($_POST['submit']) {
 														required="required">
 												</div>
 											</div>
-
 											<div class="col-sm-8 col-sm-offset-2">
 												<input class="btn btn-primary" type="submit" name="submit"
 													value="Create Room ">
 											</div>
 									</div>
-
 									</form>
-
 								</div>
 							</div>
-
-
 						</div>
-
-
-
-
 					</div>
 				</div>
-
 			</div>
 		</div>
-
-
 	</div>
 	</div>
 	</div>
