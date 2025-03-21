@@ -4,15 +4,14 @@ include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
 
-if(isset($_GET['del']))
-{
-	$id=intval($_GET['del']);
-	$adn="delete from registration where id=?";
-		$stmt= $mysqli->prepare($adn);
-		$stmt->bind_param('i',$id);
-        $stmt->execute();
-        $stmt->close();	   
-        echo "<script>alert('Data Deleted');</script>" ;
+if (isset($_GET['del'])) {
+	$id = intval($_GET['del']);
+	$adn = "delete from registration where id=?";
+	$stmt = $mysqli->prepare($adn);
+	$stmt->bind_param('i', $id);
+	$stmt->execute();
+	$stmt->close();
+	echo "<script>alert('Data Deleted');</script>";
 }
 ?>
 <!doctype html>
@@ -34,25 +33,24 @@ if(isset($_GET['del']))
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
-<script language="javascript" type="text/javascript">
-var popUpWin=0;
-function popUpWindow(URLStr, left, top, width, height)
-{
- if(popUpWin)
-{
-if(!popUpWin.closed) popUpWin.close();
-}
-popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
-}
-</script>
+	<script language="javascript" type="text/javascript">
+		var popUpWin = 0;
+
+		function popUpWindow(URLStr, left, top, width, height) {
+			if (popUpWin) {
+				if (!popUpWin.closed) popUpWin.close();
+			}
+			popUpWin = open(URLStr, 'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width=' + 510 + ',height=' + 430 + ',left=' + left + ', top=' + top + ',screenX=' + left + ',screenY=' + top + '');
+		}
+	</script>
 
 </head>
 
 <body>
-	<?php include('includes/header.php');?>
+	<?php include('includes/header.php'); ?>
 
 	<div class="ts-main-content">
-			<?php include('includes/sidebar.php');?>
+		<?php include('includes/sidebar.php'); ?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
 				<div class="row">
@@ -68,7 +66,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 											<th>Student Name</th>
 											<th>Reg no</th>
 											<th>Contact no </th>
-											<th>room no  </th>
+											<th>room no </th>
 											<th>Seater </th>
 											<th>Staying From </th>
 											<th>Action</th>
@@ -80,52 +78,64 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 											<th>Student Name</th>
 											<th>Reg no</th>
 											<th>Contact no </th>
-											<th>Room no  </th>
+											<th>Room no </th>
 											<th>Seater </th>
 											<th>Staying From </th>
 											<th>Action</th>
 										</tr>
 									</tfoot>
 									<tbody>
-<?php	
-$aid=$_SESSION['id'];
-$ret="select * from registration";
-$stmt= $mysqli->prepare($ret) ;
-//$stmt->bind_param('i',$aid);
-$stmt->execute() ;//ok
-$res=$stmt->get_result();
-$cnt=1;
-while($row=$res->fetch_object())
-	  {
-	  	?>
-<tr><td><?php echo $cnt;;?></td>
-<td><?php echo $row->firstName;?><?php echo $row->middleName;?><?php echo $row->lastName;?></td>
-<td><?php echo $row->regno;?></td>
-<td><?php echo $row->contactno;?></td>
-<td><?php echo $row->roomno;?></td>
-<td><?php echo $row->seater;?></td>
-<td><?php echo $row->stayfrom;?></td>
-<td>
-<a href="javascript:void(0);"  onClick="popUpWindow('http://localhost/hostel/admin/full-profile.php?id=<?php echo $row->id;?>');" title="View Full Details"><i class="fa fa-desktop"></i></a>&nbsp;&nbsp;
-<a href="manage-students.php?del=<?php echo $row->id;?>" title="Delete Record" onclick="return confirm("Do you want to delete");"><i class="fa fa-close"></i></a></td>
-										</tr>
-									<?php
-$cnt=$cnt+1;
-									 } ?>
-											
-										
+										<?php
+										$aid = $_SESSION['id'];
+										$ret = "select * from registration";
+										$stmt = $mysqli->prepare($ret);
+										//$stmt->bind_param('i',$aid);
+										$stmt->execute(); //ok
+										$res = $stmt->get_result();
+										$cnt = 1;
+										while ($row = $res->fetch_object()) {
+										?>
+											<tr>
+												<td><?php echo $cnt;; ?></td>
+												<td><?php echo $row->firstName; ?><?php echo $row->middleName; ?><?php echo $row->lastName; ?></td>
+												<td><?php echo $row->regno; ?></td>
+												<td><?php echo $row->contactno; ?></td>
+												<td><?php echo $row->roomno; ?></td>
+												<td><?php echo $row->seater; ?></td>
+												<td><?php echo $row->stayfrom; ?></td>
+												<td>
+													<a href="javascript:void(0);"
+														onClick="popUpWindow('http://localhost/hostel/admin/full-profile.php?id=<?php echo $row->id; ?>');"
+														title="View Full Details"><i
+															class="fa fa-desktop"></i></a>&nbsp;&nbsp;
+
+													<!-- Add this line for the Edit link -->
+													<a href="edit-student.php?id=<?php echo $row->id; ?>"
+														title="Edit Record"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+
+													<a href="manage-students.php?del=<?php echo $row->id; ?>"
+														title="Delete Record"
+														onclick="return confirm('Do you want to delete?');"><i
+															class="fa fa-close"></i></a>
+												</td>
+											</tr>
+										<?php
+											$cnt = $cnt + 1;
+										} ?>
+
+
 									</tbody>
 								</table>
 
-								
+
 							</div>
 						</div>
 
-					
+
 					</div>
 				</div>
 
-			
+
 
 			</div>
 		</div>
