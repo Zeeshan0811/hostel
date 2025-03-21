@@ -7,13 +7,11 @@ check_login();
 // Code for adding a hall
 if (isset($_POST['submit_hall'])) {
     $hall_name = $_POST['hall_name'];
-    $hall_type = $_POST['hall_type'];
-    $block_id = $_POST['block_id'];
 
     // Insert into the halls table
-    $query = "INSERT INTO halls (hall_name, hall_type, block_id) VALUES (?, ?, ?)";
+    $query = "INSERT INTO halls (hall_name) VALUES (?)";
     $stmt = $mysqli->prepare($query);
-    $stmt->bind_param('ssi', $hall_name, $hall_type, $block_id);
+    $stmt->bind_param('s', $hall_name);
     $stmt->execute();
     $stmt->close();
     echo "<script>alert('Hall has been added successfully');</script>";
@@ -32,23 +30,25 @@ if (isset($_POST['submit_hall'])) {
     <title>Add Hall</title>
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
     <link rel="stylesheet" href="css/bootstrap-social.css">
     <link rel="stylesheet" href="css/bootstrap-select.css">
     <link rel="stylesheet" href="css/fileinput.min.css">
     <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+    <script type="text/javascript" src="js/validation.min.js"></script>
 </head>
 
 <body>
-    <?php include('includes/header.php');?>
+    <?php include('includes/header.php'); ?>
 
     <div class="ts-main-content">
-        <?php include('includes/sidebar.php');?>
+        <?php include('includes/sidebar.php'); ?>
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <h2 class="page-title">Add Hall</h2>
                         <div class="panel panel-default">
                             <div class="panel-heading">Add Hall Details</div>
@@ -61,33 +61,7 @@ if (isset($_POST['submit_hall'])) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Hall Type</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="hall_type" required>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Block</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="block_id" required>
-                                                <?php
-                                                // Fetch blocks from the database
-                                                $query = "SELECT id, block_name FROM blocks";
-                                                $stmt = $mysqli->prepare($query);
-                                                $stmt->execute();
-                                                $res = $stmt->get_result();
-                                                while ($row = $res->fetch_object()) {
-                                                    echo "<option value='{$row->id}'>{$row->block_name}</option>";
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-8 col-sm-offset-2">
+                                        <div class="col-sm-8 col-sm-offset-2 text-right">
                                             <input class="btn btn-primary" type="submit" name="submit_hall" value="Add Hall">
                                         </div>
                                     </div>
@@ -99,7 +73,6 @@ if (isset($_POST['submit_hall'])) {
             </div>
         </div>
     </div>
-
     <!-- Loading Scripts -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap-select.min.js"></script>

@@ -26,7 +26,7 @@ if (isset($_POST['submit_block'])) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Add Courses and Blocks</title>
+	<title>Add Blocks</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
@@ -47,7 +47,7 @@ if (isset($_POST['submit_block'])) {
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="page-title">Add Courses and Blocks</h2>
+						<h2 class="page-title">Add Blocks</h2>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
