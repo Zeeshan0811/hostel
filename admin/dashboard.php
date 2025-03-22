@@ -39,150 +39,55 @@ check_login();
 
 				<div class="row">
 					<div class="col-md-12">
-
 						<h2 class="page-title" style="margin-top:4%">Dashboard</h2>
-
 						<div class="row">
 							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-primary text-light">
-												<div class="stat-panel text-center">
-
+								<div class="panel panel-default">
+									<div class="panel-heading">Filter</div>
+									<div class="panel-body">
+										<div class="col-md-4">
+											<div class="form-group">
+												<Select name="hall_id" id="hall_id" class="form-control" required>
+													<option value="">Select Hall</option>
 													<?php
-													$result = "SELECT count(*) FROM registration ";
-													$stmt = $mysqli->prepare($result);
-													$stmt->execute();
-													$stmt->bind_result($count);
-													$stmt->fetch();
-													$stmt->close();
-													?>
-
-													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
-													<div class="stat-panel-title text-uppercase"> Blocks </div>
-												</div>
-											</div>
-											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
-												<i class="fa fa-arrow-right"></i></a>
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-primary text-light">
-												<div class="stat-panel text-center">
-
-													<?php
-													$result = "SELECT count(*) FROM registration ";
-													$stmt = $mysqli->prepare($result);
-													$stmt->execute();
-													$stmt->bind_result($count);
-													$stmt->fetch();
-													$stmt->close();
-													?>
-
-													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
-													<div class="stat-panel-title text-uppercase"> Total Rooms </div>
-												</div>
-											</div>
-											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
-												<i class="fa fa-arrow-right"></i></a>
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-primary text-light">
-												<div class="stat-panel text-center">
-
-													<?php
-													$result = "SELECT count(*) FROM registration ";
-													$stmt = $mysqli->prepare($result);
-													$stmt->execute();
-													$stmt->bind_result($count);
-													$stmt->fetch();
-													$stmt->close();
-													?>
-
-													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
-													<div class="stat-panel-title text-uppercase"> Total Seats </div>
-												</div>
-											</div>
-											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
-												<i class="fa fa-arrow-right"></i></a>
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-primary text-light">
-												<div class="stat-panel text-center">
-
-													<?php
-													$result = "SELECT count(*) FROM registration ";
-													$stmt = $mysqli->prepare($result);
-													$stmt->execute();
-													$stmt->bind_result($count);
-													$stmt->fetch();
-													$stmt->close();
-													?>
-
-													<div class="stat-panel-number h1 "><?php echo $count; ?></div>
-													<div class="stat-panel-title text-uppercase"> Allocated Seats</div>
-												</div>
-											</div>
-											<a href="manage-students.php" class="block-anchor panel-footer">Full Detail
-												<i class="fa fa-arrow-right"></i></a>
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-success text-light">
-												<div class="stat-panel text-center">
-													<?php
-													$result1 = "SELECT count(*) FROM rooms ";
-													$stmt1 = $mysqli->prepare($result1);
-													$stmt1->execute();
-													$stmt1->bind_result($count1);
-													$stmt1->fetch();
-													$stmt1->close();
-													?>
-													<div class="stat-panel-number h1 "><?php echo $count1; ?></div>
-													<div class="stat-panel-title text-uppercase">Un Allocated Seats </div>
-												</div>
-											</div>
-											<a href="manage-rooms.php" class="block-anchor panel-footer text-center">See
-												All &nbsp; <i class="fa fa-arrow-right"></i></a>
-										</div>
-									</div>
-									<div class="col-md-3">
-										<div class="panel panel-default">
-											<div class="panel-body bk-info text-light">
-												<div class="stat-panel text-center">
-													<?php
-													$result2 = "SELECT count(*) FROM courses ";
-													$stmt2 = $mysqli->prepare($result2);
+													$query = "SELECT * FROM halls";
+													$stmt2 = $mysqli->prepare($query);
 													$stmt2->execute();
-													$stmt2->bind_result($count2);
-													$stmt2->fetch();
-													$stmt2->close();
+													$res = $stmt2->get_result();
+													while ($halls = $res->fetch_object()) {
 													?>
-													<div class="stat-panel-number h1 "><?php echo $count2; ?></div>
-													<div class="stat-panel-title text-uppercase">Total Courses</div>
-												</div>
+														<option value="<?php echo $halls->id; ?>"><?php echo $halls->hall_name; ?></option>
+													<?php } ?>
+												</Select>
 											</div>
-											<a href="manage-courses.php"
-												class="block-anchor panel-footer text-center">See All &nbsp; <i
-													class="fa fa-arrow-right"></i></a>
 										</div>
-									</div>
 
+										<div class="col-md-4">
+											<Select name="block_id" id="block_id" class="form-control" required>
+												<option value="">Select Block</option>
+												<?php
+												$query = "SELECT * FROM blocks";
+												$stmt2 = $mysqli->prepare($query);
+												$stmt2->execute();
+												$res = $stmt2->get_result();
+												while ($blocks = $res->fetch_object()) {
+												?>
+													<option value="<?php echo $blocks->id; ?>"><?php echo $blocks->block_name . " (" . $blocks->block_type . ")"; ?></option>
+												<?php } ?>
+											</Select>
+										</div>
+
+									</div>
 								</div>
 							</div>
+
+							<div class="col-md-12">
+								<div id="dashboard-data">
+									<!-- Your dashboard cards (Total Rooms, Total Seats, etc.) will go here -->
+								</div>
+							</div>
+
 						</div>
-
-
-
-
-
 					</div>
 				</div>
 
@@ -202,8 +107,7 @@ check_login();
 	<script src="js/main.js"></script>
 
 	<script>
-
-		window.onload = function () {
+		window.onload = function() {
 
 			// Line chart from swirlData for dashReport
 			var ctx = document.getElementById("dashReport").getContext("2d");
@@ -216,14 +120,48 @@ check_login();
 
 			// Pie Chart from doughutData
 			var doctx = document.getElementById("chart-area3").getContext("2d");
-			window.myDoughnut = new Chart(doctx).Pie(doughnutData, { responsive: true });
+			window.myDoughnut = new Chart(doctx).Pie(doughnutData, {
+				responsive: true
+			});
 
 			// Dougnut Chart from doughnutData
 			var doctx = document.getElementById("chart-area4").getContext("2d");
-			window.myDoughnut = new Chart(doctx).Doughnut(doughnutData, { responsive: true });
+			window.myDoughnut = new Chart(doctx).Doughnut(doughnutData, {
+				responsive: true
+			});
 
 		}
 	</script>
+
+
+	<script>
+		$(document).ready(function() {
+			$('#hall_id, #block_id').on('change', function() {
+				var hall_id = $('#hall_id').val();
+				var block_id = $('#block_id').val();
+
+				console.log(hall_id, block_id);
+
+				if (hall_id && block_id) {
+					$.ajax({
+						url: 'fetch_dashboard_data.php',
+						type: 'POST',
+						data: {
+							hall_id: hall_id,
+							block_id: block_id
+						},
+						success: function(response) {
+							$('#dashboard-data').html(response);
+						},
+						error: function() {
+							alert('Something went wrong. Please try again.');
+						}
+					});
+				}
+			});
+		});
+	</script>
+
 
 </body>
 
