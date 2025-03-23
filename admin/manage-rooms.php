@@ -79,11 +79,12 @@ if (isset($_GET['del'])) {
 										<?php
 										$aid = $_SESSION['id'];
 										$ret = "
-											SELECT rooms.*, halls.hall_name, blocks.block_type, blocks.block_name
+											SELECT rooms.*, halls.hall_name, block.block_type, block.block_name
 											FROM rooms
-											INNER JOIN halls ON rooms.hall_id = halls.id
-											INNER JOIN blocks AS block ON rooms.block_id = blocks.id
+											LEFT JOIN halls ON rooms.hall_id = halls.id
+											LEFT JOIN blocks AS block ON rooms.block_id = block.id
 										";
+
 										$stmt = $mysqli->prepare($ret);
 										//$stmt->bind_param('i',$aid);
 										$stmt->execute(); //ok

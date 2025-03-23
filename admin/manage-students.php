@@ -24,7 +24,7 @@ if (isset($_GET['del'])) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
-	<title>Manage Rooms</title>
+	<title>Manage Students</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
@@ -35,6 +35,7 @@ if (isset($_GET['del'])) {
 	<link rel="stylesheet" href="css/style.css">
 	<script language="javascript" type="text/javascript">
 		var popUpWin = 0;
+
 		function popUpWindow(URLStr, left, top, width, height) {
 			if (popUpWin) {
 				if (!popUpWin.closed) popUpWin.close();
@@ -66,6 +67,8 @@ if (isset($_GET['del'])) {
 											<th>Student Name</th>
 											<th>Reg no</th>
 											<th>Contact no </th>
+											<th>Hall </th>
+											<th>Block </th>
 											<th>room no </th>
 											<th>Seater </th>
 											<th>Staying From </th>
@@ -78,6 +81,8 @@ if (isset($_GET['del'])) {
 											<th>Student Name</th>
 											<th>Reg no</th>
 											<th>Contact no </th>
+											<th>Hall </th>
+											<th>Block </th>
 											<th>Room no </th>
 											<th>Seater </th>
 											<th>Staying From </th>
@@ -87,21 +92,26 @@ if (isset($_GET['del'])) {
 									<tbody>
 										<?php
 										$aid = $_SESSION['id'];
-										$ret = "select * from registration";
+										$ret = "
+											select registration.*, halls.hall_name, block.block_type, block.block_name
+											From registration
+											LEFT JOIN halls ON registration.hall_id = halls.id
+											LEFT JOIN blocks AS block ON registration.block_id = block.id
+										";
 										$stmt = $mysqli->prepare($ret);
 										//$stmt->bind_param('i',$aid);
-										$stmt->execute();//ok
+										$stmt->execute(); //ok
 										$res = $stmt->get_result();
 										$cnt = 1;
 										while ($row = $res->fetch_object()) {
-											?>
+										?>
 											<tr>
-												<td><?php echo $cnt;
-												; ?></td>
-												<td><?php echo $row->firstName; ?><?php echo $row->middleName; ?><?php echo $row->lastName; ?>
-												</td>
+												<td><?php echo $cnt;; ?></td>
+												<td><?php echo $row->firstName; ?><?php echo $row->middleName; ?><?php echo $row->lastName; ?></td>
 												<td><?php echo $row->regno; ?></td>
 												<td><?php echo $row->contactno; ?></td>
+												<td><?php echo $row->hall_name; ?></td>
+												<td><?php echo $row->block_name . " (" . $row->block_type . ")"; ?></td>
 												<td><?php echo $row->roomno; ?></td>
 												<td><?php echo $row->seater; ?></td>
 												<td><?php echo $row->stayfrom; ?></td>
@@ -121,7 +131,7 @@ if (isset($_GET['del'])) {
 															class="fa fa-close"></i></a>
 												</td>
 											</tr>
-											<?php
+										<?php
 											$cnt = $cnt + 1;
 										} ?>
 

@@ -90,16 +90,6 @@ if ($_POST['submit']) {
 													</Select>
 												</div>
 											</div>
-											<!-- <div class="form-group">
-												<label class="col-sm-2 control-label">Select Room Type </label>
-												<div class="col-sm-8">
-													<Select name="type" class="form-control" required>
-														<option value="">Select Room Type</option>
-														<option value="Male">Male</option>
-														<option value="Female">Female</option>
-													</Select>
-												</div>
-											</div> -->
 											<div class="form-group">
 												<label class="col-sm-2 control-label">Select Block </label>
 												<div class="col-sm-8">
