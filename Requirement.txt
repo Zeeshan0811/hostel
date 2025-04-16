@@ -57,3 +57,45 @@ Test@123
 Division List: https://github.com/nuhil/bangladesh-geocode/blob/master/divisions/divisions.sql
 District List: https://github.com/nuhil/bangladesh-geocode/blob/master/districts/districts.sql
 - my room -> Available room in dashboard 
+
+
+
+
+
+Leave Application Table 
+
+--
+-- Table structure for table `leave_application`
+--
+
+CREATE TABLE `leave_application` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `regno` int(11) DEFAULT NULL,
+  `leave_from` date DEFAULT NULL,
+  `leave_to` date DEFAULT NULL,
+  `status` varchar(25) DEFAULT NULL COMMENT 'Pending, Approved, Canceled',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `leave_application`
+--
+ALTER TABLE `leave_application`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `leave_application`
+--
+ALTER TABLE `leave_application`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;

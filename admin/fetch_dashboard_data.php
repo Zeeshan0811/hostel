@@ -31,12 +31,32 @@ $stmt->bind_result($allocatedSeats);
 $stmt->fetch();
 $stmt->close();
 
+// On Leave Students
+
+$today = date('Y-m-d');
+
+$stmt = $mysqli->prepare("
+    SELECT COUNT(*) 
+    FROM leave_application la
+    JOIN userregistration ur ON la.user_id = ur.id
+    JOIN registration r ON ur.regNo = r.regno
+    WHERE la.status = 'Approved'
+      AND ? BETWEEN la.leave_from AND la.leave_to
+      AND r.hall_id = ?
+      AND r.block_id = ?
+");
+
+$stmt->bind_param("sii", $today, $hall_id, $block_id);
+$stmt->execute();
+$stmt->bind_result($onLeaveStudents);
+$stmt->fetch();
+$stmt->close();
 
 ?>
 
 <!-- Send back the updated dashboard cards -->
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="panel panel-default">
             <div class="panel-body bk-primary text-light">
                 <div class="stat-panel text-center">
@@ -49,7 +69,7 @@ $stmt->close();
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="panel panel-default">
             <div class="panel-body bk-primary text-light">
                 <div class="stat-panel text-center">
@@ -63,7 +83,7 @@ $stmt->close();
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="panel panel-default">
             <div class="panel-body bk-primary text-light">
                 <div class="stat-panel text-center">
@@ -76,7 +96,7 @@ $stmt->close();
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="panel panel-default">
             <div class="panel-body bk-success text-light">
                 <div class="stat-panel text-center">
@@ -85,6 +105,18 @@ $stmt->close();
                 </div>
             </div>
             <a href="manage-rooms.php" class="block-anchor panel-footer text-center">See
+                All &nbsp; <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-body bk-success text-light">
+                <div class="stat-panel text-center">
+                    <div class="stat-panel-number h1 "><?php echo $onLeaveStudents  ?: 0; ?></div>
+                    <div class="stat-panel-title text-uppercase">On Leave Students</div>
+                </div>
+            </div>
+            <a href="leave_applications.php" class="block-anchor panel-footer text-center">See
                 All &nbsp; <i class="fa fa-arrow-right"></i></a>
         </div>
     </div>
